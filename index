@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Sistema de Ocorrências</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topo">
+      <img class="topo__logo" src="assets/logo.svg" alt="" width="44" height="44">
+      <div>
+        <p class="topo__nome">Sistema de Ocorrências</p>
+        <p class="topo__versao">Protótipo</p>
+      </div>
+    </header>
+
+    <main class="conteudo">
+      <section id="tela-inicial" class="tela" aria-labelledby="titulo-inicial">
+        <h1 id="titulo-inicial" class="tela__titulo">Como você vai acessar?</h1>
+        <p class="tela__texto">Escolha o seu perfil para continuar.</p>
+
+        <div class="cards">
+          <button type="button" class="card" data-perfil="territorial">
+            <span class="card__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/>
+                <circle cx="12" cy="9.5" r="2.5"/>
+              </svg>
+            </span>
+            <span class="card__texto">
+              <span class="card__titulo">Coordenador Territorial</span>
+              <span class="card__descricao">Registre ocorrências da sua unidade territorial.</span>
+            </span>
+          </button>
+
+          <button type="button" class="card" data-perfil="polo">
+            <span class="card__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V7l8-4 8 4v14"/>
+                <path d="M2 21h20"/>
+                <path d="M9 21v-6h6v6"/>
+                <path d="M9 10h.01M15 10h.01"/>
+              </svg>
+            </span>
+            <span class="card__texto">
+              <span class="card__titulo">Coordenador do Polo</span>
+              <span class="card__descricao">Registre ocorrências do seu polo.</span>
+            </span>
+          </button>
+
+          <button type="button" class="card" data-perfil="subcoordenador">
+            <span class="card__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3 20a6 6 0 0 1 12 0"/>
+                <circle cx="17" cy="9" r="2.5"/>
+                <path d="M16 14.2a5 5 0 0 1 5 5.8"/>
+              </svg>
+            </span>
+            <span class="card__texto">
+              <span class="card__titulo">Subcoordenador</span>
+              <span class="card__descricao">Registre ocorrências do polo em que atua.</span>
+            </span>
+          </button>
+
+          <button type="button" class="card card--admin" data-perfil="administrador">
+            <span class="card__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3 4 6v6c0 4.4 3.2 8 8 9 4.8-1 8-4.6 8-9V6l-8-3Z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <span class="card__texto">
+              <span class="card__titulo">Administrador</span>
+              <span class="card__descricao">Acompanhe e resolva as ocorrências registradas.</span>
+            </span>
+          </button>
+        </div>
+
+        <p id="aviso" class="aviso" role="status" aria-live="polite" hidden></p>
+      </section>
+
+      <section id="tela-selecao" class="tela" aria-labelledby="titulo-selecao" hidden>
+        <button type="button" id="botao-voltar" class="voltar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Voltar
+        </button>
+
+        <h1 id="titulo-selecao" class="tela__titulo" tabindex="-1"></h1>
+        <p id="texto-selecao" class="tela__texto"></p>
+
+        <div class="selecao">
+          <label id="rotulo-selecao" class="selecao__rotulo" for="campo-selecao"></label>
+          <select id="campo-selecao" class="selecao__campo" aria-describedby="erro-selecao"></select>
+          <p id="erro-selecao" class="selecao__erro" role="alert" hidden></p>
+          <button type="button" id="botao-continuar" class="botao" disabled>Continuar</button>
+        </div>
+
+        <p id="aviso-selecao" class="aviso" role="status" aria-live="polite" hidden></p>
+      </section>
+      <section id="tela-registro" class="tela" aria-labelledby="titulo-registro" hidden>
+        <button type="button" id="registro-voltar" class="voltar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Voltar
+        </button>
+
+        <h1 id="titulo-registro" class="tela__titulo" tabindex="-1">Registrar ocorrência</h1>
+        <p id="registro-contexto" class="tela__texto"></p>
+
+        <form id="form-registro" class="selecao registro" novalidate>
+          <fieldset class="registro__grupo" aria-describedby="erro-motivo">
+            <legend class="selecao__rotulo">Motivo</legend>
+            <div id="lista-motivos" class="opcoes"></div>
+            <p id="erro-motivo" class="selecao__erro" role="alert" hidden></p>
+          </fieldset>
+
+          <div class="registro__grupo">
+            <label class="selecao__rotulo" for="campo-descricao">Descrição da ocorrência</label>
+            <textarea id="campo-descricao" class="selecao__campo registro__texto" rows="12" maxlength="5000" placeholder="Descreva detalhadamente o que aconteceu..." aria-describedby="erro-descricao"></textarea>
+            <p id="erro-descricao" class="selecao__erro" role="alert" hidden></p>
+          </div>
+
+          <div class="registro__grupo">
+            <span class="selecao__rotulo">Arquivo (opcional)</span>
+            <input type="file" id="campo-arquivo" accept=".pdf,.png,.jpg,.jpeg" hidden>
+            <div class="registro__arquivo">
+              <button type="button" id="botao-arquivo" class="botao botao--secundario">Anexar arquivo</button>
+              <span id="nome-arquivo" class="registro__nome" aria-live="polite"></span>
+              <button type="button" id="botao-remover-arquivo" class="botao botao--secundario" hidden>Remover</button>
+            </div>
+            <p class="registro__dica">PDF, PNG ou JPG, até 5 MB.</p>
+            <p id="erro-arquivo" class="selecao__erro" role="alert" hidden></p>
+          </div>
+
+          <p class="registro__dica">Status inicial: <span class="selo">Pendente</span> Somente o Administrador pode marcar como resolvida.</p>
+          <p id="erro-registro" class="selecao__erro" role="alert" hidden></p>
+          <button type="submit" id="botao-enviar" class="botao">Registrar ocorrência</button>
+        </form>
+
+        <div id="registro-confirmacao" class="selecao registro" role="status" hidden>
+          <h2 class="registro__subtitulo">Ocorrência registrada</h2>
+          <dl class="registro__dados">
+            <dt>Protocolo (ID)</dt><dd id="conf-id"></dd>
+            <dt>Data e horário</dt><dd id="conf-data"></dd>
+            <dt>Motivo</dt><dd id="conf-motivo"></dd>
+            <dt>Status</dt><dd><span id="conf-status" class="selo"></span></dd>
+            <dt>Arquivo</dt><dd id="conf-arquivo"></dd>
+            <dt>Descrição</dt><dd id="conf-descricao" class="registro__descricao"></dd>
+          </dl>
+          <label class="selecao__rotulo" for="conf-resolucao">Como foi resolvido</label>
+          <textarea id="conf-resolucao" class="selecao__campo" rows="3" readonly placeholder="Preenchido somente pelo Administrador."></textarea>
+          <button type="button" id="botao-nova" class="botao">Registrar outra ocorrência</button>
+          <button type="button" id="botao-inicio" class="botao botao--secundario">Voltar ao início</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <p>Protótipo sem banco de dados e sem autenticação real.</p>
+    </footer>
+  </div>
+
+  <script src="js/dados.js"></script>
+  <script src="js/permissoes.js"></script>
+  <script src="js/ocorrencias.js"></script>
+  <script src="js/registro.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
